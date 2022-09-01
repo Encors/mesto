@@ -1,6 +1,7 @@
 .gallery__like-btn {
    background-image: url(../../../images/like.svg);
    max-width: 22px;
+   height: 19px;
    width: 100%;
    background-repeat: no-repeat;
 }

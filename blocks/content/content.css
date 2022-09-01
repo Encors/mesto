@@ -1,4 +1,11 @@
 .content {
-   max-width: 880px;
-   margin: 0 auto;
+  max-width: 880px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+@media screen and (max-width: 528px) {
+  .content {
+    width: calc(100% - 19px * 2);
+  }
 }

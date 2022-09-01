@@ -3,3 +3,9 @@
   border-bottom: 1px solid #545454;
   margin: 40px 0;
 }
+
+@media screen and (max-width: 528px) {
+  .header__line {
+    margin: 31px 0 42px 0;
+  }
+}
