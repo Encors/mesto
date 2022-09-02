@@ -1,4 +1,4 @@
-.popup {
+.overlay {
    display: none;
    background: rgba(0, 0, 0, 0.5);
    width: 100%;
