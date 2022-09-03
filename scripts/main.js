@@ -1,13 +1,13 @@
-const overlay = document.querySelector(".overlay");
-const openPopupButton = document.querySelector(".profile__edit-btn");
+const overlay = document.querySelector('.overlay');
+const openPopupButton = document.querySelector('.profile__edit-btn');
 
 const clearOverlay = () => {
-  overlay.innerHTML = "";
+  overlay.innerHTML = '';
 };
 
 const toggleOverlay = () => {
   clearOverlay();
-  overlay.classList.toggle("overlay_opened");
+  overlay.classList.toggle('overlay_opened');
 };
 
 const getPopupElement = () => {
@@ -15,24 +15,42 @@ const getPopupElement = () => {
     <button class="popup__close-btn button" type="button"></button>
     <h2 class="popup__title">Редактировать профиль</h2>
     <input type="text" class="popup__input-name" placeholder="Имя"/>
-    <input type="text" class="popup__input-subtitle" placeholder="О себе"/>
+    <input type="text" class="popup__input-job" placeholder="О себе"/>
     <button class="popup__submit-btn button" type="submit">Сохранить</button>
 `;
 
-  const element = document.createElement("form");
+  const formElement = document.createElement('form');
 
-  element.classList.add("popup__container");
+  formElement.classList.add('popup__container');
 
-  element.insertAdjacentHTML("afterbegin", popupInnerHTML);
+  formElement.insertAdjacentHTML('afterbegin', popupInnerHTML);
 
-  const closePopupButton = element.querySelector(".popup__close-btn");
+  const nameTextContent = document.querySelector('.profile__title');
+  const jobTextContent = document.querySelector('.profile__job');
 
-  closePopupButton.addEventListener("click", () => {
+  const nameInput = formElement.querySelector('.popup__input-name');
+  const jobInput = formElement.querySelector('.popup__input-job');
+
+  nameInput.value = nameTextContent.textContent;
+  jobInput.value = jobTextContent.textContent;
+
+  function formSubmitHandler(evt) {
+    evt.preventDefault();
+
+    jobTextContent.textContent = jobInput.value;
+    nameTextContent.textContent = nameInput.value;
+    toggleOverlay();
+  }
+
+  formElement.addEventListener('submit', formSubmitHandler);
+
+  const closePopupButton = formElement.querySelector('.popup__close-btn');
+
+  closePopupButton.addEventListener('click', () => {
     toggleOverlay();
   });
 
-  return element;
-
+  return formElement;
 };
 
 const openPopup = () => {
@@ -40,10 +58,6 @@ const openPopup = () => {
   overlay.appendChild(getPopupElement());
 };
 
-openPopupButton.addEventListener("click", () => {
+openPopupButton.addEventListener('click', () => {
   openPopup();
 });
-
-// const getValueInput = () => {
-
-// }
