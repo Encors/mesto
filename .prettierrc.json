@@ -15,7 +15,7 @@
   "proseWrap": "preserve",
   "quoteProps": "as-needed",
   "requirePragma": false,
-  "useTabs": true,
+  "useTabs": false,
   "vueIndentScriptAndStyle": false,
   "overrides": [
     {
