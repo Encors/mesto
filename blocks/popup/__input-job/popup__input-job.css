@@ -10,3 +10,10 @@
   font-size: 14px;
   line-height: 17px;
 }
+
+@media screen and (max-width: 528px) {
+  .popup__input-job {
+    width: calc(100% - 22px * 2);
+    margin: 0 auto 45px auto;
+  }
+}

@@ -11,3 +11,11 @@
   width: calc(100% - 36px * 2);
   margin: 0 auto 37px auto;
 }
+
+@media screen and (max-width: 528px) {
+  .popup__submit-btn {
+    width: calc(100% - 22px * 2);
+    height: 46px;
+    margin: 0 auto 25px auto;
+  }
+}

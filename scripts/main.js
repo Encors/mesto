@@ -13,7 +13,7 @@ const toggleOverlay = () => {
 const getPopupElement = () => {
   const popupInnerHTML = `
     <button class="popup__close-btn button" type="button"></button>
-    <h2 class="popup__title">Редактировать профиль</h2>
+    <h2 class="popup__title">Редактировать&nbsp;профиль</h2>
     <input type="text" class="popup__input-name" placeholder="Имя"/>
     <input type="text" class="popup__input-job" placeholder="О себе"/>
     <button class="popup__submit-btn button" type="submit">Сохранить</button>
@@ -21,7 +21,7 @@ const getPopupElement = () => {
 
   const formElement = document.createElement('form');
 
-  formElement.classList.add('popup__container');
+  formElement.classList.add('popup');
 
   formElement.insertAdjacentHTML('afterbegin', popupInnerHTML);
 

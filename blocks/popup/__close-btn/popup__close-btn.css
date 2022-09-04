@@ -5,4 +5,14 @@
   position: absolute;
   top: -40px;
   right: -40px;
+  background-size: cover;
+}
+
+@media screen and (max-width: 528px) {
+  .popup__close-btn {
+    width: 20px;
+    height: 20px;
+    top: -36px;
+    right: 0px;
+  }
 }
