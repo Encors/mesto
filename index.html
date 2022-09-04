@@ -1,77 +1,85 @@
 <!DOCTYPE html>
 <html lang="ru">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./pages/index.css" />
-    <title>Mesto</title>
-  </head>
-  <body>
-    <div class="page">
-      <header class="header">
-        <img class="header__logo" src="./images/logo.svg" alt="Логотип Mesto" />
-        <div class="header__line"></div>
-      </header>
-      <main class="content">
-        <section class="profile">
-          <img src="./images/userpic.jpg" class="profile__avatar" alt="Фотография профиля" />
-          <article class="profile__info">
-            <h1 class="profile__title">Жак-Ив Кусто</h1>
-            <p class="profile__job">Исследователь океана</p>
-            <button class="profile__edit-btn button"></button>
-          </article>
-          <button class="profile__add-btn button"></button>
-        </section>
-        <section class="gallery">
-          <article class="gallery__element">
-            <img class="gallery__photo" src="./images/karachaevsk.jpg" alt="Карачаевск" />
-            <div class="gallery__decription">
-              <h2 class="gallery__title">Карачаевск</h2>
-              <button class="gallery__like-btn button"></button>
-            </div>
-          </article>
-          <article class="gallery__element">
-            <img class="gallery__photo" src="./images/elbrus.jpg" alt="Эльбрус" />
-            <div class="gallery__decription">
-              <h2 class="gallery__title">Гора Эльбрус</h2>
-              <button class="gallery__like-btn button"></button>
-            </div>
-          </article>
-          <article class="gallery__element">
-            <img class="gallery__photo" src="./images/dombai.jpg" alt="Домбай" />
-            <div class="gallery__decription">
-              <h2 class="gallery__title">Домбай</h2>
-              <button class="gallery__like-btn button"></button>
-            </div>
-          </article>
-          <article class="gallery__element">
-            <img class="gallery__photo" src="./images/elbrus.jpg" alt="Эльбрус" />
-            <div class="gallery__decription">
-              <h2 class="gallery__title">Гора Эльбрус</h2>
-              <button class="gallery__like-btn button"></button>
-            </div>
-          </article>
-          <article class="gallery__element">
-            <img class="gallery__photo" src="./images/dombai.jpg" alt="Домбай" />
-            <div class="gallery__decription">
-              <h2 class="gallery__title">Домбай</h2>
-              <button class="gallery__like-btn button"></button>
-            </div>
-          </article>
-          <article class="gallery__element">
-            <img class="gallery__photo" src="./images/karachaevsk.jpg" alt="Карачаевск" />
-            <div class="gallery__decription">
-              <h2 class="gallery__title">Карачаево-Черкесия</h2>
-              <button class="gallery__like-btn button"></button>
-            </div>
-          </article>
-        </section>
-        <section class="overlay"></section>
-      </main>
-      <footer class="footer">
-        <p class="footer__copyright">&copy; 2022. Акаева Диана</p>
-      </footer>
-    </div>
-    <script src="./scripts/main.js"></script>
-  </body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="./pages/index.css" />
+		<title>Место</title>
+	</head>
+	<body class="page">
+		<!-- Ни в одном браузере ни у меня ни у знакомых нет белых полос, но вашу рекомендацию выполнила -->
+		<header class="header">
+			<img class="header__logo" src="./images/logo.svg" alt="Логотип Место" />
+		</header>
+		<main class="content">
+			<section class="profile">
+				<img src="./images/userpic.jpg" class="profile__avatar" alt="Фотография профиля" />
+				<div class="profile__info">
+					<h1 class="profile__title">Жак-Ив Кусто</h1>
+					<p class="profile__job">Исследователь океана</p>
+					<button class="profile__edit-btn button" type="button"></button>
+				</div>
+				<button class="profile__add-btn button" type="button"></button>
+			</section>
+			<section class="gallery">
+				<article class="photo-card">
+					<img class="photo-card__photo" src="./images/karachaevsk.jpg" alt="Церковь в горах Домбая" />
+					<div class="photo-card__decription">
+						<h2 class="photo-card__title">Карачаевск</h2>
+						<button class="photo-card__like-btn button" type="button"></button>
+					</div>
+				</article>
+				<article class="photo-card">
+					<img class="photo-card__photo" src="./images/elbrus.jpg" alt="Горы на фоне пасмурного неба" />
+					<div class="photo-card__decription">
+						<h2 class="photo-card__title">Гора Эльбрус</h2>
+						<button class="photo-card__like-btn button" type="button"></button>
+					</div>
+				</article>
+				<article class="photo-card">
+					<img class="photo-card__photo" src="./images/dombai.jpg" alt="Туманные равнины на закате" />
+					<div class="photo-card__decription">
+						<h2 class="photo-card__title">Домбай</h2>
+						<button class="photo-card__like-btn button" type="button"></button>
+					</div>
+				</article>
+				<article class="photo-card">
+					<img class="photo-card__photo" src="./images/elbrus.jpg" alt="Горы на фоне пасмурного неба" />
+					<div class="photo-card__decription">
+						<h2 class="photo-card__title">Гора Эльбрус</h2>
+						<button class="photo-card__like-btn button" type="button"></button>
+					</div>
+				</article>
+				<article class="photo-card">
+					<img class="photo-card__photo" src="./images/dombai.jpg" alt="Туманные равнины на закате" />
+					<div class="photo-card__decription">
+						<h2 class="photo-card__title">Домбай</h2>
+						<button class="photo-card__like-btn button" type="button"></button>
+					</div>
+				</article>
+				<article class="photo-card">
+					<img class="photo-card__photo" src="./images/karachaevsk.jpg" alt="Церковь в горах Домбая" />
+					<div class="photo-card__decription">
+						<h2 class="photo-card__title">Карачаево-Черкесия</h2>
+						<button class="photo-card__like-btn button" type="button"></button>
+					</div>
+				</article>
+			</section>
+			<div class="popup">
+				<div class="popup__container">
+					<button class="popup__close-btn button" type="button"></button>
+					<h2 class="popup__title">Редактировать&nbsp;профиль</h2>
+					<form class="popup__form">
+						<input type="text" class="popup__input popup__input_name" placeholder="Имя" name="Name" />
+						<input type="text" class="popup__input popup__input_job" placeholder="О себе" name="Job" />
+						<button class="popup__submit-btn button" type="submit">Сохранить</button>
+					</form>
+				</div>
+			</div>
+		</main>
+		<footer class="footer">
+			<p class="footer__copyright">&copy; 2022. Акаева Диана</p>
+		</footer>
+		<script src="./scripts/index.js"></script>
+	</body>
 </html>

@@ -7,7 +7,7 @@
   grid-row: 1;
   align-self: center;
   justify-self: flex-end;
-  border: 2px solid #fff;
+  border: 1px solid #fff;
   background-position: center;
 }
 
@@ -15,7 +15,6 @@
   .profile__edit-btn {
     width: 18px;
     height: 18px;
-    border: 1px solid #fff;
     margin-right: 19px;
   }
 }
