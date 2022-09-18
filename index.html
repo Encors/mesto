@@ -32,8 +32,8 @@
           </article>
         </template>
       </section>
-      <div class="popup">
-        <div class="popup__container popup__container_type_edit-profile">
+      <div class="popup popup_type_edit-profile">
+        <div class="popup__container popup__container_type_form">
           <button class="popup__close-btn button" type="button"></button>
           <h2 class="popup__title">Редактировать&nbsp;профиль</h2>
           <form class="popup__form" name="editProfileForm" id="editProfileForm">
@@ -42,7 +42,9 @@
             <button class="popup__submit-btn button" type="submit">Сохранить</button>
           </form>
         </div>
-        <div class="popup__container popup__container_type_add-card">
+      </div>
+      <div class="popup popup_type_add-card">
+        <div class="popup__container popup__container_type_form">
           <button class="popup__close-btn button" type="button"></button>
           <h2 class="popup__title">Новое место</h2>
           <form class="popup__form" name="addCardForm" id="addCardForm">
@@ -51,7 +53,9 @@
             <button class="popup__submit-btn button" type="submit">Создать</button>
           </form>
         </div>
-        <div class="popup__container popup__container_type_photo-container">
+      </div>
+      <div class="popup popup_type_photo">
+        <div class="popup__container popup__container_type_photo">
           <button class="popup__close-btn button" type="button"></button>
           <figure class="popup__figure">
             <img class="popup__photo" src="#" alt="" />
