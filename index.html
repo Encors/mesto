@@ -20,20 +20,18 @@
         </div>
         <button class="profile__add-btn button" type="button"></button>
       </section>
-      <section class="gallery">
-
+      <section class="gallery" aria-label="Секция фотографий">
         <template id="photo-card">
-        <article class="photo-card">
-          <img class="photo-card__photo" src="" alt="" />
-          <button class="photo-card__remove-btn button" type="button"></button>
-          <div class="photo-card__decription">
-            <h2 class="photo-card__title"></h2>
-            <button class="photo-card__like-btn button" type="button"></button>
-          </div>
+          <article class="photo-card">
+            <img class="photo-card__photo" src="" alt="" />
+            <button class="photo-card__remove-btn button" type="button"></button>
+            <div class="photo-card__decription">
+              <h2 class="photo-card__title"></h2>
+              <button class="photo-card__like-btn button" type="button"></button>
+            </div>
+          </article>
         </template>
-
       </section>
-
       <div class="popup">
         <div class="popup__container popup__container_type_edit-profile">
           <button class="popup__close-btn button" type="button"></button>
@@ -44,7 +42,6 @@
             <button class="popup__submit-btn button" type="submit">Сохранить</button>
           </form>
         </div>
-
         <div class="popup__container popup__container_type_add-card">
           <button class="popup__close-btn button" type="button"></button>
           <h2 class="popup__title">Новое место</h2>
@@ -54,9 +51,14 @@
             <button class="popup__submit-btn button" type="submit">Создать</button>
           </form>
         </div>
+        <div class="popup__container popup__container_type_photo-container">
+          <button class="popup__close-btn button" type="button"></button>
+          <figure class="popup__figure">
+            <img class="popup__photo" src="#" alt="" />
+            <figcaption class="popup__caption"></figcaption>
+          </figure>
+        </div>
       </div>
-
-      
     </main>
     <footer class="footer">
       <p class="footer__copyright">&copy; 2022. Акаева Диана</p>

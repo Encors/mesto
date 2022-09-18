@@ -12,13 +12,14 @@ const gallery = document.querySelector('.gallery');
 const photoCardTemplate = gallery.querySelector('#photo-card').content;
 //popup
 const closeButtonCollection = popup.querySelectorAll('.popup__close-btn');
+const popupContainer = popup.querySelectorAll('.popup__container');
 const nameInput = popup.querySelector('.popup__input_type_name');
 const jobInput = popup.querySelector('.popup__input_type_job');
 const popupEditProfile = popup.querySelector('.popup__container_type_edit-profile');
 const popupAddCard = popup.querySelector('.popup__container_type_add-card');
 const placeName = popup.querySelector('.popup__input_type_place-name');
 const imgLink = popup.querySelector('.popup__input_type_img-link');
-const popupContainer = popup.querySelectorAll('.popup__container');
+const popupPhotoContainer = popup.querySelector('.popup__container_type_photo-container');
 
 //Открыть оверлей + попап
 const addOverlay = () => popup.classList.add('popup_opened');
@@ -46,6 +47,7 @@ const closeOverlay = () => {
     container.classList.remove('popup_opened');
   }); //очистили оверлей
   popup.classList.remove('popup_opened'); //скрыли оверлей
+  popup.style.background = 'rgba(0, 0, 0, 0.5)';
 };
 
 closeButton.forEach((button) => {
@@ -85,6 +87,20 @@ function createCard() {
 
   //Добавляем карточку в галерею
   gallery.prepend(photoCard);
+
+  //Добавляем функцию открытия фото в большом размере
+  const cardPhoto = gallery.querySelector('.photo-card__photo');
+  const cardName = gallery.querySelector('.photo-card__title');
+
+  const openPhotoPopup = () => {
+    addOverlay();
+    popupPhotoContainer.classList.add('popup_opened');
+    popupPhotoContainer.querySelector('.popup__photo').src = cardPhoto.src;
+    popupPhotoContainer.querySelector('.popup__caption').textContent = cardName.textContent;
+    popup.style.background = 'rgba(0, 0, 0, 0.9)';
+  };
+
+  cardPhoto.addEventListener('click', openPhotoPopup);
 }
 
 //Добавляем карточку в галерею через форму
@@ -125,6 +141,7 @@ const initialCards = [
 
 initialCards.forEach((item) => {
   createCard(item);
-  gallery.querySelector('.photo-card__title').textContent = item.name;
   gallery.querySelector('.photo-card__photo').src = item.link;
+  gallery.querySelector('.photo-card__title').textContent = item.name;
+  gallery.querySelector('.photo-card__photo').alt = `Изображение ${item.name}`;
 });
