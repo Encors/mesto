@@ -21,60 +21,42 @@
         <button class="profile__add-btn button" type="button"></button>
       </section>
       <section class="gallery">
+
+        <template id="photo-card">
         <article class="photo-card">
-          <img class="photo-card__photo" src="./images/karachaevsk.jpg" alt="Церковь в горах Домбая" />
+          <img class="photo-card__photo" src="" alt="" />
+          <button class="photo-card__remove-btn button" type="button"></button>
           <div class="photo-card__decription">
-            <h2 class="photo-card__title">Карачаевск</h2>
+            <h2 class="photo-card__title"></h2>
             <button class="photo-card__like-btn button" type="button"></button>
           </div>
-        </article>
-        <article class="photo-card">
-          <img class="photo-card__photo" src="./images/elbrus.jpg" alt="Горы на фоне пасмурного неба" />
-          <div class="photo-card__decription">
-            <h2 class="photo-card__title">Гора Эльбрус</h2>
-            <button class="photo-card__like-btn button" type="button"></button>
-          </div>
-        </article>
-        <article class="photo-card">
-          <img class="photo-card__photo" src="./images/dombai.jpg" alt="Туманные равнины на закате" />
-          <div class="photo-card__decription">
-            <h2 class="photo-card__title">Домбай</h2>
-            <button class="photo-card__like-btn button" type="button"></button>
-          </div>
-        </article>
-        <article class="photo-card">
-          <img class="photo-card__photo" src="./images/elbrus.jpg" alt="Горы на фоне пасмурного неба" />
-          <div class="photo-card__decription">
-            <h2 class="photo-card__title">Гора Эльбрус</h2>
-            <button class="photo-card__like-btn button" type="button"></button>
-          </div>
-        </article>
-        <article class="photo-card">
-          <img class="photo-card__photo" src="./images/dombai.jpg" alt="Туманные равнины на закате" />
-          <div class="photo-card__decription">
-            <h2 class="photo-card__title">Домбай</h2>
-            <button class="photo-card__like-btn button" type="button"></button>
-          </div>
-        </article>
-        <article class="photo-card">
-          <img class="photo-card__photo" src="./images/karachaevsk.jpg" alt="Церковь в горах Домбая" />
-          <div class="photo-card__decription">
-            <h2 class="photo-card__title">Карачаево-Черкесия</h2>
-            <button class="photo-card__like-btn button" type="button"></button>
-          </div>
-        </article>
+        </template>
+
       </section>
+
       <div class="popup">
-        <div class="popup__container">
+        <div class="popup__container popup__container_type_edit-profile">
           <button class="popup__close-btn button" type="button"></button>
           <h2 class="popup__title">Редактировать&nbsp;профиль</h2>
-          <form class="popup__form" name = "editProfileForm">
+          <form class="popup__form" name="editProfileForm" id="editProfileForm">
             <input type="text" class="popup__input popup__input_type_name" placeholder="Имя" name="Name" />
             <input type="text" class="popup__input popup__input_type_job" placeholder="О себе" name="Job" />
             <button class="popup__submit-btn button" type="submit">Сохранить</button>
           </form>
         </div>
+
+        <div class="popup__container popup__container_type_add-card">
+          <button class="popup__close-btn button" type="button"></button>
+          <h2 class="popup__title">Новое место</h2>
+          <form class="popup__form" name="addCardForm" id="addCardForm">
+            <input type="text" class="popup__input popup__input_type_place-name" placeholder="Название" name="Name" />
+            <input type="text" class="popup__input popup__input_type_img-link" placeholder="Ссылка на картинку" name="Link" />
+            <button class="popup__submit-btn button" type="submit">Создать</button>
+          </form>
+        </div>
       </div>
+
+      
     </main>
     <footer class="footer">
       <p class="footer__copyright">&copy; 2022. Акаева Диана</p>

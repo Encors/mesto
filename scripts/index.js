@@ -1,29 +1,130 @@
 const popup = document.querySelector('.popup');
-const openPopup = document.querySelector('.profile__edit-btn');
+//profile
+const openEditPopup = document.querySelector('.profile__edit-btn');
 const profileName = document.querySelector('.profile__title');
 const profileJob = document.querySelector('.profile__job');
-const closeButton = popup.querySelector('.popup__close-btn');
-const formElement = popup.querySelector('.popup__form');
+const addCardBtn = document.querySelector('.profile__add-btn');
+//form
+const editProfileFormElement = popup.querySelector('#editProfileForm');
+const addCardForm = popup.querySelector('#addCardForm');
+//photo-card
+const gallery = document.querySelector('.gallery');
+const photoCardTemplate = gallery.querySelector('#photo-card').content;
+//popup
+const closeButtonCollection = popup.querySelectorAll('.popup__close-btn');
 const nameInput = popup.querySelector('.popup__input_type_name');
 const jobInput = popup.querySelector('.popup__input_type_job');
+const popupEditProfile = popup.querySelector('.popup__container_type_edit-profile');
+const popupAddCard = popup.querySelector('.popup__container_type_add-card');
+const placeName = popup.querySelector('.popup__input_type_place-name');
+const imgLink = popup.querySelector('.popup__input_type_img-link');
+const popupContainer = popup.querySelectorAll('.popup__container');
 
-function showClick() {
-	popup.classList.add('popup_opened');
-	nameInput.value = profileName.textContent;
-	jobInput.value = profileJob.textContent;
-}
+//Открыть оверлей + попап
+const addOverlay = () => popup.classList.add('popup_opened');
 
-function closeClick() {
-	popup.classList.remove('popup_opened');
-}
+const showEditProfilePopup = () => {
+  addOverlay();
+  popupEditProfile.classList.add('popup_opened');
+  nameInput.value = profileName.textContent;
+  jobInput.value = profileJob.textContent;
+};
 
+const showAddCardPopup = () => {
+  addOverlay();
+  popupAddCard.classList.add('popup_opened');
+};
+
+openEditPopup.addEventListener('click', showEditProfilePopup);
+addCardBtn.addEventListener('click', showAddCardPopup);
+
+//Закрыть оверлей + попап
+const closeButton = Array.from(closeButtonCollection);
+
+const closeOverlay = () => {
+  popupContainer.forEach((container) => {
+    container.classList.remove('popup_opened');
+  }); //очистили оверлей
+  popup.classList.remove('popup_opened'); //скрыли оверлей
+};
+
+closeButton.forEach((button) => {
+  button.addEventListener('click', closeOverlay);
+});
+
+//Изменить информацию профиля
 function formSubmitHandler(evt) {
-	evt.preventDefault();
+  evt.preventDefault();
   profileName.textContent = nameInput.value;
-	profileJob.textContent = jobInput.value;
-	closeClick();
+  profileJob.textContent = jobInput.value;
+  closeOverlay();
 }
 
-openPopup.addEventListener('click', showClick);
-closeButton.addEventListener('click', closeClick);
-formElement.addEventListener('submit', formSubmitHandler);
+editProfileFormElement.addEventListener('submit', formSubmitHandler);
+
+function createCard() {
+  //Создаём карточку
+  const photoCard = photoCardTemplate.cloneNode(true);
+  photoCard.querySelector('.photo-card__title').textContent = placeName.value;
+  photoCard.querySelector('.photo-card__photo').src = imgLink.value;
+  photoCard.querySelector('.photo-card__photo').alt = `Изображение ${placeName.value}`;
+
+  //Добавляем лайк
+  const likeBtn = photoCard.querySelector('.photo-card__like-btn');
+  const addLike = (evt) => {
+    evt.target.classList.toggle('photo-card__like-btn_active');
+  };
+  likeBtn.addEventListener('click', addLike);
+
+  //Удаляем карточку
+  const removeBtn = photoCard.querySelector('.photo-card__remove-btn');
+  const removeCard = () => {
+    removeBtn.closest('.photo-card').remove();
+  };
+  removeBtn.addEventListener('click', removeCard);
+
+  //Добавляем карточку в галерею
+  gallery.prepend(photoCard);
+}
+
+//Добавляем карточку в галерею через форму
+const addCard = (evt) => {
+  evt.preventDefault();
+  createCard();
+  closeOverlay();
+};
+addCardForm.addEventListener('submit', addCard);
+
+//Добавляем карточки при загрузке страницы
+const initialCards = [
+  {
+    name: 'Архыз',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg',
+  },
+  {
+    name: 'Челябинская область',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg',
+  },
+  {
+    name: 'Иваново',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg',
+  },
+  {
+    name: 'Камчатка',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg',
+  },
+  {
+    name: 'Холмогорский район',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg',
+  },
+  {
+    name: 'Байкал',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg',
+  },
+];
+
+initialCards.forEach((item) => {
+  createCard(item);
+  gallery.querySelector('.photo-card__title').textContent = item.name;
+  gallery.querySelector('.photo-card__photo').src = item.link;
+});
