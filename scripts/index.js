@@ -11,7 +11,6 @@ const gallery = document.querySelector('.gallery');
 const photoCardTemplate = gallery.querySelector('#photo-card').content;
 //popup-elements
 const closeButtons = document.querySelectorAll('.popup__close-btn');
-const popupContainer = document.querySelectorAll('.popup__container');
 const nameInput = popupEditProfile.querySelector('.popup__input_type_name');
 const jobInput = popupEditProfile.querySelector('.popup__input_type_job');
 const placeName = popupAddCard.querySelector('.popup__input_type_place-name');
