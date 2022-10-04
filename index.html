@@ -36,9 +36,11 @@
         <div class="popup__container popup__container_type_form">
           <button class="popup__close-btn button" type="button"></button>
           <h2 class="popup__title">Редактировать&nbsp;профиль</h2>
-          <form class="popup__form" name="editProfileForm" id="editProfileForm">
-            <input type="text" class="popup__input popup__input_type_name" placeholder="Имя" name="Name" />
-            <input type="text" class="popup__input popup__input_type_job" placeholder="О себе" name="Job" />
+          <form class="popup__form" name="profile" id="profile" novalidate>
+            <input type="text" class="popup__input popup__input_type_name" value="Введите имя" placeholder="Имя" name="name-profile" id="name-profile" required minlength="2" maxlength="40" />
+            <span id="name-profile-error" class="error"></span>
+            <input type="text" class="popup__input popup__input_type_job" value="Введите имя" placeholder="О себе" name="job-profile" id="job-profile" required minlength="2" maxlength="200" />
+            <span id="job-profile-error" class="error"></span>
             <button class="popup__submit-btn button" type="submit">Сохранить</button>
           </form>
         </div>
@@ -47,9 +49,12 @@
         <div class="popup__container popup__container_type_form">
           <button class="popup__close-btn button" type="button"></button>
           <h2 class="popup__title">Новое место</h2>
-          <form class="popup__form" name="addCardForm" id="addCardForm">
-            <input type="text" class="popup__input popup__input_type_place-name" placeholder="Название" name="Name" />
-            <input type="text" class="popup__input popup__input_type_img-link" placeholder="Ссылка на картинку" name="Link" />
+
+          <form class="popup__form" name="card" id="card" novalidate>
+            <input type="text" class="popup__input popup__input_type_place-name" placeholder="Название" name="name-card" id="name-card" required minlength="2" maxlength="30" />
+            <span id="name-card-error" class="error"></span>
+            <input type="url" class="popup__input popup__input_type_img-link" placeholder="Ссылка на картинку" name="link-card" id="link-card" required />
+            <span id="link-card-error" class="error"></span>
             <button class="popup__submit-btn button" type="submit">Создать</button>
           </form>
         </div>
@@ -68,5 +73,6 @@
       <p class="footer__copyright">&copy; 2022. Акаева Диана</p>
     </footer>
     <script src="./scripts/index.js"></script>
+    <script src="./scripts/validate.js"></script>
   </body>
 </html>
