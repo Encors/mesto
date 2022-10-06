@@ -3,10 +3,10 @@ const popupPhoto = document.querySelector('.popup_type_photo');
 const popupEditProfile = document.querySelector('.popup_type_edit-profile');
 const popupAddCard = document.querySelector('.popup_type_add-card');
 //profile
-const openEditPopup = document.querySelector('.profile__edit-btn');
+const profilePopup = document.querySelector('.profile__edit-btn');
 const profileName = document.querySelector('.profile__title');
 const profileJob = document.querySelector('.profile__job');
-const addCardBtn = document.querySelector('.profile__add-btn');
+const cardPopup = document.querySelector('.profile__add-btn');
 //photo-card
 const gallery = document.querySelector('.gallery');
 const photoCardTemplate = gallery.querySelector('#photo-card').content;
@@ -16,11 +16,12 @@ const nameInput = popupEditProfile.querySelector('.popup__input_type_name');
 const jobInput = popupEditProfile.querySelector('.popup__input_type_job');
 const placeName = popupAddCard.querySelector('.popup__input_type_place-name');
 const imgLink = popupAddCard.querySelector('.popup__input_type_img-link');
-const zoomPhoto = popupPhoto.querySelector('.popup__photo');
+const photo = popupPhoto.querySelector('.popup__photo');
 const captionPhoto = popupPhoto.querySelector('.popup__caption');
 //form
 const formProfile = document.forms.profile;
 const formCard = document.forms.card;
+const submitButton = formCard.querySelector('.popup__submit-btn');
 
 //Открыть попап
 const openPopup = (popup) => {
@@ -28,13 +29,13 @@ const openPopup = (popup) => {
   document.addEventListener('keydown', closeOnEscape);
 };
 
-openEditPopup.addEventListener('click', () => {
+profilePopup.addEventListener('click', () => {
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
   openPopup(popupEditProfile);
 });
 
-addCardBtn.addEventListener('click', () => openPopup(popupAddCard));
+cardPopup.addEventListener('click', () => openPopup(popupAddCard));
 
 //Закрыть попап
 const closePopup = (popup) => {
@@ -66,7 +67,8 @@ popups.forEach((overlay) => {
 });
 
 //Изменить информацию профиля
-function submitEditProfileForm() {
+function submitEditProfileForm(evt) {
+  evt.preventDefault();
   profileName.textContent = nameInput.value;
   profileJob.textContent = jobInput.value;
   closePopup(popupEditProfile);
@@ -77,9 +79,12 @@ formProfile.addEventListener('submit', submitEditProfileForm);
 //Создаём карточку
 function createCard(item) {
   const photoCardElement = photoCardTemplate.cloneNode(true);
+
+  const cardPhoto = photoCardElement.querySelector('.photo-card__photo');
+
   photoCardElement.querySelector('.photo-card__title').textContent = item.name;
-  photoCardElement.querySelector('.photo-card__photo').src = item.link;
-  photoCardElement.querySelector('.photo-card__photo').alt = `Изображение ${item.name}`;
+  cardPhoto.src = item.link;
+  cardPhoto.alt = `Изображение ${item.name}`;
 
   //Добавляем лайк
   const likeBtn = photoCardElement.querySelector('.photo-card__like-btn');
@@ -96,14 +101,12 @@ function createCard(item) {
   removeBtn.addEventListener('click', removeCard);
 
   //Добавляем функцию открытия фото в большом размере
-  const cardPhoto = photoCardElement.querySelector('.photo-card__photo');
-  const cardName = photoCardElement.querySelector('.photo-card__title');
 
   const openPhotoPopup = () => {
     openPopup(popupPhoto);
-    zoomPhoto.src = cardPhoto.src;
-    captionPhoto.textContent = cardName.textContent;
-    zoomPhoto.alt = cardPhoto.alt;
+    photo.src = item.link;
+    captionPhoto.textContent = item.name;
+    photo.alt = `Изображение ${item.name}`;
   };
 
   cardPhoto.addEventListener('click', openPhotoPopup);
@@ -113,13 +116,14 @@ function createCard(item) {
 
 //Добавляем карточку в галерею через форму
 function sendCardForm(evt) {
-  const currentForm = evt.currentTarget;
+  evt.preventDefault();
   const formValue = {
     name: placeName.value,
     link: imgLink.value,
   };
   gallery.prepend(createCard(formValue));
-  currentForm.reset();
+  evt.target.reset();
+  disableButton(submitButton, settings);
   closePopup(popupAddCard);
 }
 

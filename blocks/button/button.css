@@ -14,3 +14,8 @@
   opacity: 60%;
   cursor: pointer;
 }
+
+.button:disabled {
+  cursor: default;
+  opacity: 100%;
+}
