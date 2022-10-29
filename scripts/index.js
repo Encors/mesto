@@ -1,27 +1,6 @@
-const popups = document.querySelectorAll('.popup');
-const popupPhoto = document.querySelector('.popup_type_photo');
-const popupEditProfile = document.querySelector('.popup_type_edit-profile');
-const popupAddCard = document.querySelector('.popup_type_add-card');
-//profile
-const profilePopup = document.querySelector('.profile__edit-btn');
-const profileName = document.querySelector('.profile__title');
-const profileJob = document.querySelector('.profile__job');
-const cardPopup = document.querySelector('.profile__add-btn');
-//photo-card
-const gallery = document.querySelector('.gallery');
-const photoCardTemplate = gallery.querySelector('#photo-card').content;
-//popup-elements
-const closeButtons = document.querySelectorAll('.popup__close-btn');
-const nameInput = popupEditProfile.querySelector('.popup__input_type_name');
-const jobInput = popupEditProfile.querySelector('.popup__input_type_job');
-const placeName = popupAddCard.querySelector('.popup__input_type_place-name');
-const imgLink = popupAddCard.querySelector('.popup__input_type_img-link');
-const photo = popupPhoto.querySelector('.popup__photo');
-const captionPhoto = popupPhoto.querySelector('.popup__caption');
-//form
-const formProfile = document.forms.profile;
-const formCard = document.forms.card;
-const submitButton = formCard.querySelector('.popup__submit-btn');
+import { Card } from './Сard.js';
+import * as all from './variables.js';
+import { FormValidator } from './FormValidator.js';
 
 //Открыть попап
 const openPopup = (popup) => {
@@ -29,13 +8,13 @@ const openPopup = (popup) => {
   document.addEventListener('keydown', closeOnEscape);
 };
 
-profilePopup.addEventListener('click', () => {
-  nameInput.value = profileName.textContent;
-  jobInput.value = profileJob.textContent;
-  openPopup(popupEditProfile);
+all.profilePopup.addEventListener('click', () => {
+  all.nameInput.value = all.profileName.textContent;
+  all.jobInput.value = all.profileJob.textContent;
+  openPopup(all.popupEditProfile);
 });
 
-cardPopup.addEventListener('click', () => openPopup(popupAddCard));
+all.cardPopup.addEventListener('click', () => openPopup(all.popupAddCard));
 
 //Закрыть попап
 const closePopup = (popup) => {
@@ -43,7 +22,7 @@ const closePopup = (popup) => {
   document.removeEventListener('keydown', closeOnEscape);
 };
 
-closeButtons.forEach((button) => {
+all.closeButtons.forEach((button) => {
   const popup = button.closest('.popup');
   button.addEventListener('click', () => closePopup(popup));
 });
@@ -58,7 +37,7 @@ function closeOnEscape(evt) {
 
 //закрываем по клику на оверлей
 
-popups.forEach((overlay) => {
+all.popups.forEach((overlay) => {
   overlay.addEventListener('mousedown', (evt) => {
     if (evt.target.classList.contains('popup_opened')) {
       closePopup(overlay);
@@ -69,66 +48,38 @@ popups.forEach((overlay) => {
 //Изменить информацию профиля
 function submitEditProfileForm(evt) {
   evt.preventDefault();
-  profileName.textContent = nameInput.value;
-  profileJob.textContent = jobInput.value;
-  closePopup(popupEditProfile);
+  all.profileName.textContent = all.nameInput.value;
+  all.profileJob.textContent = all.jobInput.value;
+  closePopup(all.popupEditProfile);
 }
 
-formProfile.addEventListener('submit', submitEditProfileForm);
+all.formProfile.addEventListener('submit', submitEditProfileForm);
 
-//Создаём карточку
+// Создаём карточку
+
 function createCard(item) {
-  const photoCardElement = photoCardTemplate.cloneNode(true);
+  const card = new Card(item, '#photo-card', openPopup);
+  const cardElement = card.getCardElement();
 
-  const cardPhoto = photoCardElement.querySelector('.photo-card__photo');
-
-  photoCardElement.querySelector('.photo-card__title').textContent = item.name;
-  cardPhoto.src = item.link;
-  cardPhoto.alt = `Изображение ${item.name}`;
-
-  //Добавляем лайк
-  const likeBtn = photoCardElement.querySelector('.photo-card__like-btn');
-  const addLike = (evt) => {
-    evt.target.classList.toggle('photo-card__like-btn_active');
-  };
-  likeBtn.addEventListener('click', addLike);
-
-  //Удаляем карточку
-  const removeBtn = photoCardElement.querySelector('.photo-card__remove-btn');
-  const removeCard = () => {
-    removeBtn.closest('.photo-card').remove();
-  };
-  removeBtn.addEventListener('click', removeCard);
-
-  //Добавляем функцию открытия фото в большом размере
-
-  const openPhotoPopup = () => {
-    openPopup(popupPhoto);
-    photo.src = item.link;
-    captionPhoto.textContent = item.name;
-    photo.alt = `Изображение ${item.name}`;
-  };
-
-  cardPhoto.addEventListener('click', openPhotoPopup);
-
-  return photoCardElement;
+  return cardElement;
 }
 
 //Добавляем карточку в галерею через форму
+
 function sendCardForm(evt) {
   evt.preventDefault();
   const formValue = {
-    name: placeName.value,
-    link: imgLink.value,
+    name: all.placeName.value,
+    link: all.imgLink.value,
   };
-  gallery.prepend(createCard(formValue));
-  evt.target.reset();
-  disableButton(submitButton, settings);
-  closePopup(popupAddCard);
+  all.gallery.prepend(createCard(formValue));
+  all.formCard.reset();
+  formValidators['card'].disableButton();
+  closePopup(all.popupAddCard);
 }
 
 // //Добавляем слушатели на форму
-formCard.addEventListener('submit', sendCardForm);
+all.formCard.addEventListener('submit', sendCardForm);
 
 //Добавляем карточки при загрузке страницы
 const initialCards = [
@@ -158,4 +109,26 @@ const initialCards = [
   },
 ];
 
-initialCards.forEach((item) => gallery.prepend(createCard(item)));
+initialCards.forEach((item) => {
+  const card = new Card(item, '#photo-card', openPopup);
+  const cardElement = card.getCardElement();
+
+  all.gallery.prepend(cardElement);
+});
+
+const formValidators = {};
+
+const enableValidation = (settings) => {
+  const formList = Array.from(document.querySelectorAll(settings.formSelector));
+
+  formList.forEach((form) => {
+    const validator = new FormValidator(form, settings);
+    const formName = form.getAttribute('name');
+    formValidators[formName] = validator;
+    validator.enableValidation();
+  });
+};
+
+enableValidation(all.settings);
+
+console.log(formValidators);
