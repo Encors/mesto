@@ -130,5 +130,3 @@ const enableValidation = (settings) => {
 };
 
 enableValidation(all.settings);
-
-console.log(formValidators);
