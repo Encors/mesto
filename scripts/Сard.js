@@ -1,5 +1,3 @@
-import { captionPhoto, photo, popupPhoto } from './variables.js';
-
 export class Card {
   constructor(data, templateSelector, openPhotoPopup) {
     this._name = data.name;
