@@ -1,5 +1,5 @@
 import { Card } from './Сard.js';
-import * as all from './variables.js';
+import * as allConstants from './variables.js';
 import { FormValidator } from './FormValidator.js';
 
 //Открыть попап
@@ -8,13 +8,17 @@ const openPopup = (popup) => {
   document.addEventListener('keydown', closeOnEscape);
 };
 
-all.profilePopup.addEventListener('click', () => {
-  all.nameInput.value = all.profileName.textContent;
-  all.jobInput.value = all.profileJob.textContent;
-  openPopup(all.popupEditProfile);
+allConstants.profilePopup.addEventListener('click', () => {
+  formValidators['profile'].resetValidation();
+  allConstants.nameInput.value = allConstants.profileName.textContent;
+  allConstants.jobInput.value = allConstants.profileJob.textContent;
+  openPopup(allConstants.popupEditProfile);
 });
 
-all.cardPopup.addEventListener('click', () => openPopup(all.popupAddCard));
+allConstants.cardPopup.addEventListener('click', () => {
+  formValidators['card'].resetValidation();
+  openPopup(allConstants.popupAddCard);
+});
 
 //Закрыть попап
 const closePopup = (popup) => {
@@ -22,7 +26,7 @@ const closePopup = (popup) => {
   document.removeEventListener('keydown', closeOnEscape);
 };
 
-all.closeButtons.forEach((button) => {
+allConstants.closeButtons.forEach((button) => {
   const popup = button.closest('.popup');
   button.addEventListener('click', () => closePopup(popup));
 });
@@ -36,8 +40,7 @@ function closeOnEscape(evt) {
 }
 
 //закрываем по клику на оверлей
-
-all.popups.forEach((overlay) => {
+allConstants.popups.forEach((overlay) => {
   overlay.addEventListener('mousedown', (evt) => {
     if (evt.target.classList.contains('popup_opened')) {
       closePopup(overlay);
@@ -48,73 +51,46 @@ all.popups.forEach((overlay) => {
 //Изменить информацию профиля
 function submitEditProfileForm(evt) {
   evt.preventDefault();
-  all.profileName.textContent = all.nameInput.value;
-  all.profileJob.textContent = all.jobInput.value;
-  closePopup(all.popupEditProfile);
+  allConstants.profileName.textContent = allConstants.nameInput.value;
+  allConstants.profileJob.textContent = allConstants.jobInput.value;
+  closePopup(allConstants.popupEditProfile);
 }
 
-all.formProfile.addEventListener('submit', submitEditProfileForm);
-
-// Создаём карточку
-
-function createCard(item) {
-  const card = new Card(item, '#photo-card', openPopup);
-  const cardElement = card.getCardElement();
-
-  return cardElement;
-}
+allConstants.formProfile.addEventListener('submit', submitEditProfileForm);
 
 //Добавляем карточку в галерею через форму
-
 function sendCardForm(evt) {
   evt.preventDefault();
   const formValue = {
-    name: all.placeName.value,
-    link: all.imgLink.value,
+    name: allConstants.placeName.value,
+    link: allConstants.imgLink.value,
   };
-  all.gallery.prepend(createCard(formValue));
-  all.formCard.reset();
-  formValidators['card'].disableButton();
-  closePopup(all.popupAddCard);
+  allConstants.gallery.prepend(createCard(formValue));
+  closePopup(allConstants.popupAddCard);
 }
 
 // //Добавляем слушатели на форму
-all.formCard.addEventListener('submit', sendCardForm);
+allConstants.formCard.addEventListener('submit', sendCardForm);
 
 //Добавляем карточки при загрузке страницы
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg',
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg',
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg',
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg',
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg',
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg',
-  },
-];
-
-initialCards.forEach((item) => {
-  const card = new Card(item, '#photo-card', openPopup);
-  const cardElement = card.getCardElement();
-
-  all.gallery.prepend(cardElement);
+allConstants.initialCards.forEach((item) => {
+  allConstants.gallery.prepend(createCard(item));
 });
+
+// Создаём карточку
+function createCard(item) {
+  const card = new Card(item, '#photo-card', openPhotoPopup);
+  const cardElement = card.getCardElement();
+  return cardElement;
+}
+
+// Открываем попам с зум-фото
+function openPhotoPopup(name, link) {
+  allConstants.photo.src = link;
+  allConstants.captionPhoto.textContent = name;
+  allConstants.photo.alt = `Изображение ${name}`;
+  openPopup(allConstants.popupPhoto);
+}
 
 const formValidators = {};
 
@@ -129,4 +105,4 @@ const enableValidation = (settings) => {
   });
 };
 
-enableValidation(all.settings);
+enableValidation(allConstants.settings);

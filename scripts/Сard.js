@@ -1,11 +1,11 @@
 import { captionPhoto, photo, popupPhoto } from './variables.js';
 
 export class Card {
-  constructor(data, templateSelector, openPopup) {
+  constructor(data, templateSelector, openPhotoPopup) {
     this._name = data.name;
     this._link = data.link;
     this._templateSelector = templateSelector;
-    this._openPopup = openPopup;
+    this._openPhotoPopup = openPhotoPopup;
   }
 
   _getTemplate() {
@@ -30,13 +30,6 @@ export class Card {
     return this._cardElement;
   }
 
-  _openPhotoPopup() {
-    photo.src = this._link;
-    captionPhoto.textContent = this._name;
-    photo.alt = `Изображение ${this._name}`;
-    this._openPopup(popupPhoto);
-  }
-
   _handleLike() {
     this._likeBtn.classList.toggle('photo-card__like-btn_active');
   }
@@ -53,7 +46,7 @@ export class Card {
       this._removeCard();
     });
     this._cardPhoto.addEventListener('click', () => {
-      this._openPhotoPopup();
+      this._openPhotoPopup(this._name, this._link);
     });
   }
 }
