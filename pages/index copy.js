@@ -1,6 +1,6 @@
-import { Card } from './Сard.js';
-import * as allConstants from './variables.js';
-import { FormValidator } from './FormValidator.js';
+import { Card } from '../components/Сard.js';
+import * as constants from '../utils/constants.js';
+import { FormValidator } from '../components/FormValidator.js';
 
 //Открыть попап
 const openPopup = (popup) => {
@@ -8,16 +8,16 @@ const openPopup = (popup) => {
   document.addEventListener('keydown', closeOnEscape);
 };
 
-allConstants.profilePopup.addEventListener('click', () => {
+constants.profilePopup.addEventListener('click', () => {
   formValidators['profile'].resetValidation();
-  allConstants.nameInput.value = allConstants.profileName.textContent;
-  allConstants.jobInput.value = allConstants.profileJob.textContent;
-  openPopup(allConstants.popupEditProfile);
+  constants.nameInput.value = constants.profileName.textContent;
+  constants.jobInput.value = constants.profileJob.textContent;
+  openPopup(constants.popupEditProfile);
 });
 
-allConstants.cardPopup.addEventListener('click', () => {
+constants.cardPopup.addEventListener('click', () => {
   formValidators['card'].resetValidation();
-  openPopup(allConstants.popupAddCard);
+  openPopup(constants.popupAddCard);
 });
 
 //Закрыть попап
@@ -26,7 +26,7 @@ const closePopup = (popup) => {
   document.removeEventListener('keydown', closeOnEscape);
 };
 
-allConstants.closeButtons.forEach((button) => {
+constants.closeButtons.forEach((button) => {
   const popup = button.closest('.popup');
   button.addEventListener('click', () => closePopup(popup));
 });
@@ -40,7 +40,7 @@ function closeOnEscape(evt) {
 }
 
 //закрываем по клику на оверлей
-allConstants.popups.forEach((overlay) => {
+constants.popups.forEach((overlay) => {
   overlay.addEventListener('mousedown', (evt) => {
     if (evt.target.classList.contains('popup_opened')) {
       closePopup(overlay);
@@ -51,30 +51,30 @@ allConstants.popups.forEach((overlay) => {
 //Изменить информацию профиля
 function submitEditProfileForm(evt) {
   evt.preventDefault();
-  allConstants.profileName.textContent = allConstants.nameInput.value;
-  allConstants.profileJob.textContent = allConstants.jobInput.value;
-  closePopup(allConstants.popupEditProfile);
+  constants.profileName.textContent = constants.nameInput.value;
+  constants.profileJob.textContent = constants.jobInput.value;
+  closePopup(constants.popupEditProfile);
 }
 
-allConstants.formProfile.addEventListener('submit', submitEditProfileForm);
+constants.formProfile.addEventListener('submit', submitEditProfileForm);
 
 //Добавляем карточку в галерею через форму
 function sendCardForm(evt) {
   evt.preventDefault();
   const formValue = {
-    name: allConstants.placeName.value,
-    link: allConstants.imgLink.value,
+    name: constants.placeName.value,
+    link: constants.imgLink.value,
   };
-  allConstants.gallery.prepend(createCard(formValue));
-  closePopup(allConstants.popupAddCard);
+  constants.gallery.prepend(createCard(formValue));
+  closePopup(constants.popupAddCard);
 }
 
 // //Добавляем слушатели на форму
-allConstants.formCard.addEventListener('submit', sendCardForm);
+constants.formCard.addEventListener('submit', sendCardForm);
 
 //Добавляем карточки при загрузке страницы
-allConstants.initialCards.forEach((item) => {
-  allConstants.gallery.prepend(createCard(item));
+constants.initialCards.forEach((item) => {
+  constants.gallery.prepend(createCard(item));
 });
 
 // Создаём карточку
@@ -86,10 +86,10 @@ function createCard(item) {
 
 // Открываем попам с зум-фото
 function openPhotoPopup(name, link) {
-  allConstants.photo.src = link;
-  allConstants.captionPhoto.textContent = name;
-  allConstants.photo.alt = `Изображение ${name}`;
-  openPopup(allConstants.popupPhoto);
+  constants.photo.src = link;
+  constants.captionPhoto.textContent = name;
+  constants.photo.alt = `Изображение ${name}`;
+  openPopup(constants.popupPhoto);
 }
 
 const formValidators = {};
@@ -105,4 +105,4 @@ const enableValidation = (settings) => {
   });
 };
 
-enableValidation(allConstants.settings);
+enableValidation(constants.settings);
