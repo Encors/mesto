@@ -6,7 +6,6 @@ import PopupWithImage from '../components/PopupWithImage.js';
 import UserInfo from '../components/UserInfo.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 
-
 //включаем валидацию
 const formValidators = {};
 const enableValidation = (settings) => {
@@ -33,6 +32,7 @@ const defaultCards = new Section(
   },
   constants.gallery
 );
+
 defaultCards.renderItems();
 
 //Экземпляр попапа редактирования профиля
