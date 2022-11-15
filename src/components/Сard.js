@@ -7,7 +7,7 @@ export class Card {
   }
 
   _getTemplate() {
-    const cardElement = document.querySelector(this._templateSelector).content.cloneNode(true);
+    const cardElement = document.querySelector(this._templateSelector).content.querySelector('.photo-card').cloneNode(true);
     return cardElement;
   }
 
@@ -33,7 +33,8 @@ export class Card {
   }
 
   _removeCard() {
-    this._removeBtn.closest('.photo-card').remove();
+    this._cardElement.remove();
+    this._cardElement = null;
   }
 
   _setEventListeners() {
