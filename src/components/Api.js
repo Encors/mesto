@@ -66,6 +66,15 @@ export default class Api {
     }).then(this._response);
   }
 
+  setNewAvatar() {
+    return fetch(this._url + `/users/me/avatar`, {
+      headers: this._headers,
+      method: 'PATCH',
+      body: JSON.stringify({
+        avatar: link,
+      }),
+    }).then(this._response);
+  }
   // getFullStartInfo() {
   // Promise.all([getInitialCards, getProfileInfo])
   // }

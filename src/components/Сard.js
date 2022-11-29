@@ -1,8 +1,8 @@
 export default class Card {
-  constructor({ cardInfo, user, handleCardClick, handleLikeClick, handleDeleteIconClick, handleDeleteLike}, templateSelector) {
+  constructor({ cardInfo, user, handleCardClick, handleLikeClick, handleDeleteIconClick, handleDeleteLike }, templateSelector) {
     this._cardInfo = cardInfo;
     this._cardId = cardInfo._id;
-    this._user = user;
+    this._userId = user._id;
     this._templateSelector = templateSelector;
     this._handleCardClick = handleCardClick;
     this._handleLikeClick = handleLikeClick;
@@ -33,10 +33,11 @@ export default class Card {
     this._setEventListeners();
 
     this._cardInfo.likes.forEach((like) => {
-      if ((like._id = this._cardInfo._id)) {
+      if (like._id == this._userId) {
         this._likeBtn.classList.add('photo-card__like-btn_active');
       }
     });
+
     //возвращаем карточку
     return this._cardElement;
   }
@@ -52,7 +53,7 @@ export default class Card {
   }
 
   isOwner() {
-    if (this._cardInfo.owner._id !== this._user._id) {
+    if (this._cardInfo.owner._id !== this._userId) {
       this._removeBtn.remove();
     }
   }

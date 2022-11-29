@@ -10,6 +10,6 @@
   line-height: 17px;
 }
 
-.popup__input:first-child {
-  margin-top: 36px;
+.popup__input:focus-visible {
+  padding: 4px 0 4px 4px;
 }

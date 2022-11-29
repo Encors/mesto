@@ -11,7 +11,10 @@
     </header>
     <main class="content">
       <section class="profile">
-        <img src="<%=require('./images/userpic.jpg')%>" class="profile__avatar" alt="Фотография профиля" />
+        <div class="profile__picture">
+          <img src="<%=require('./images/userpic.jpg')%>" class="profile__avatar" alt="Фотография профиля" />
+          <button class="profile__picture-btn button" type="button"></button>
+        </div>
         <div class="profile__info">
           <h1 class="profile__title">Жак-Ив Кусто</h1>
           <p class="profile__job">Исследователь океана</p>
@@ -65,7 +68,7 @@
       </div>
     </div>
     <div class="popup popup_type_photo">
-      <div class="popup__container popup__container_type_photo">
+      <div class="popup__container-photo">
         <button class="popup__close-btn button" type="button"></button>
         <figure class="popup__figure">
           <img class="popup__photo" src="#" alt="" />
@@ -76,9 +79,20 @@
     <div class="popup popup_type_confirm">
       <div class="popup__container popup__container_type_form">
         <button class="popup__close-btn button" type="button"></button>
-        <h2 class="popup__title">Вы уверены?</h2>
+        <h2 class="popup__title-confirm">Вы уверены?</h2>
         <form class="popup__form" name="confirm" id="confirm" novalidate>
           <button class="popup__submit-btn button" type="submit">Да</button>
+        </form>
+      </div>
+    </div>
+    <div class="popup popup_type_set-avatar">
+      <div class="popup__container popup__container_type_form">
+        <button class="popup__close-btn button" type="button"></button>
+        <h2 class="popup__title">Обновить аватар</h2>
+        <form class="popup__form" name="confirm" id="confirm" novalidate>
+          <input type="url" class="popup__input popup__input_type_img-link" placeholder="Ссылка на картинку" name="avatar" id="avatar" required />
+          <span id="avatar-error" class="error"></span>
+          <button class="popup__submit-btn button" type="submit">Сохранить</button>
         </form>
       </div>
     </div>
