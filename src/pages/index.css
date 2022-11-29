@@ -41,3 +41,5 @@
 @import url(../blocks/error/error.css);
 @import url(../blocks/popup/__input/_type/_error.css);
 @import url(../blocks/popup/__submit-btn/_disabled/popup__submit-btn_disabled.css);
+@import url(../blocks/photo-card/__like-section/photo-card__like-section.css);
+@import url(../blocks/photo-card/__like-count/photo-card__like-count.css);
