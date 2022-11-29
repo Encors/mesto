@@ -7,7 +7,7 @@ import PopupWithImage from '../components/PopupWithImage.js';
 import UserInfo from '../components/UserInfo.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import Api from '../components/Api';
-import PopupWithSubmit from '../components/PopupWithSubmit';
+import PopupWithConfirmation from '../components/PopupWithConfirmation';
 
 const api = new Api({
   baseUrl: 'https://nomoreparties.co/v1/cohort-54',
@@ -16,6 +16,41 @@ const api = new Api({
     'Content-Type': 'application/json',
   },
 });
+
+const initialCards = new Section(
+  {
+    renderer: (cardInfo) => {
+      initialCards.setItem(createCard(cardInfo));
+    },
+  },
+  constants.gallery
+);
+
+const popupPhoto = new PopupWithImage(constants.popupPhoto);
+
+const popupProfile = new PopupWithForm(constants.popupEditProfile, constants.formProfile, {
+  submitForm: (inputValues) => {
+    api.putProfileInfo(inputValues.nameProfile, inputValues.jobProfile);
+    getNewUserInfo();
+    popupProfile.close();
+  },
+});
+
+const popupAppendCard = new PopupWithForm(constants.popupAddCard, constants.formCard, {
+  submitForm: (inputValues) => {
+    api
+      .addNewCard(inputValues)
+      .then((data) => {
+        initialCards.setItem(createCard(data));
+        popupAppendCard.close();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  },
+});
+
+const confirmPopup = new PopupWithConfirmation(constants.confirmPopup, constants.confirmForm);
 
 // Инициализация карточек при загрузке страницы
 api
@@ -26,15 +61,6 @@ api
   .catch((error) => {
     console.log(error);
   });
-
-const initialCards = new Section(
-  {
-    renderer: (cardInfo) => {
-      initialCards.setItem(createCard(cardInfo));
-    },
-  },
-  constants.gallery
-);
 
 // Получить и изменить информацию профиля
 
@@ -59,6 +85,23 @@ function getNewUserInfo() {
 
 getNewUserInfo();
 
+constants.profileEditButton.addEventListener('click', () => {
+  constants.nameInput.value = user.name;
+  constants.jobInput.value = user.about;
+  formValidators['profile'].resetValidation();
+  popupProfile.open();
+});
+
+constants.buttonAddCard.addEventListener('click', () => {
+  formValidators['card'].resetValidation();
+  popupAppendCard.open();
+});
+
+popupProfile.setEventListeners();
+popupPhoto.setEventListeners();
+popupAppendCard.setEventListeners();
+confirmPopup.setEventListeners();
+
 //включаем валидацию
 const formValidators = {};
 const enableValidation = (settings) => {
@@ -72,49 +115,6 @@ const enableValidation = (settings) => {
   });
 };
 enableValidation(constants.settings);
-
-//Экземпляр попапа редактирования профиля
-const popupProfile = new PopupWithForm(constants.popupEditProfile, constants.formProfile, {
-  submitForm: (inputValues) => {
-    api.putProfileInfo(inputValues.nameProfile, inputValues.jobProfile);
-    getNewUserInfo();
-    popupProfile.close();
-  },
-});
-
-constants.profileEditButton.addEventListener('click', () => {
-  constants.nameInput.value = user.name;
-  constants.jobInput.value = user.about;
-  formValidators['profile'].resetValidation();
-  popupProfile.open();
-});
-popupProfile.setEventListeners();
-
-//Экземпляр попапа с открытой картинкой
-const popupPhoto = new PopupWithImage(constants.popupPhoto);
-popupPhoto.setEventListeners();
-
-//Экземпляр попапа добавления карточки
-const popupAppendCard = new PopupWithForm(constants.popupAddCard, constants.formCard, {
-  submitForm: (inputValues) => {
-    api
-      .addNewCard(inputValues)
-      .then((data) => {
-        initialCards.setItem(createCard(data));
-        popupAppendCard.close();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  },
-});
-
-constants.buttonAddCard.addEventListener('click', () => {
-  formValidators['card'].resetValidation();
-  popupAppendCard.open();
-});
-
-popupAppendCard.setEventListeners();
 
 // Создаём карточку
 function createCard(cardInfo) {
@@ -165,6 +165,3 @@ function createCard(cardInfo) {
   const cardItem = card.getCardElement();
   return cardItem;
 }
-
-const confirmPopup = new PopupWithSubmit(constants.confirmPopup, constants.confirmForm);
-confirmPopup.setEventListeners();
