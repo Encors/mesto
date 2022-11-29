@@ -30,8 +30,14 @@ const popupPhoto = new PopupWithImage(constants.popupPhoto);
 
 const popupProfile = new PopupWithForm(constants.popupEditProfile, constants.formProfile, {
   submitForm: (inputValues) => {
-    api.putProfileInfo(inputValues.nameProfile, inputValues.jobProfile);
-    getNewUserInfo();
+    api
+      .putProfileInfo(inputValues.nameProfile, inputValues.jobProfile)
+      .then(() => {
+        getNewUserInfo();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     popupProfile.close();
   },
 });
@@ -50,7 +56,21 @@ const popupAppendCard = new PopupWithForm(constants.popupAddCard, constants.form
   },
 });
 
-const confirmPopup = new PopupWithConfirmation(constants.confirmPopup, constants.confirmForm);
+const popupSetAvatar = new PopupWithForm(constants.popupAvatar, constants.formAvatar, {
+  submitForm: (inputValues) => {
+    api
+      .setNewAvatar(inputValues)
+      .then(() => {
+        getNewUserInfo();
+        popupSetAvatar.close();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  },
+});
+
+const confirmPopup = new PopupWithConfirmation(constants.popupConfirm, constants.formConfirm);
 
 // Инициализация карточек при загрузке страницы
 api
@@ -73,10 +93,11 @@ function getNewUserInfo() {
       const userInfo = new UserInfo({
         profileName: '.profile__title',
         profileJob: '.profile__job',
-        profileAvatar: 'profile__avatar',
+        profileAvatar: '.profile__avatar',
       });
       user = userInfo.getUserInfo(profileInfo);
       userInfo.setUserInfo(user.name, user.about);
+      userInfo.setAvatar(user.avatar);
     })
     .catch((error) => {
       console.log(error);
@@ -97,10 +118,16 @@ constants.buttonAddCard.addEventListener('click', () => {
   popupAppendCard.open();
 });
 
+constants.buttonSetAvatar.addEventListener('click', () => {
+  formValidators['avatar'].resetValidation();
+  popupSetAvatar.open();
+});
+
 popupProfile.setEventListeners();
 popupPhoto.setEventListeners();
 popupAppendCard.setEventListeners();
 confirmPopup.setEventListeners();
+popupSetAvatar.setEventListeners();
 
 //включаем валидацию
 const formValidators = {};

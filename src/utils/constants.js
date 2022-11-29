@@ -16,5 +16,8 @@ export const settings = {
   inactiveButtonClass: 'popup__submit-btn_disabled',
   inputErrorClass: 'popup__input_type_error',
 };
-export const confirmPopup = document.querySelector('.popup_type_confirm');
-export const confirmForm = document.forms.confirm;
+export const popupConfirm = document.querySelector('.popup_type_confirm');
+export const formConfirm = document.forms.confirm;
+export const popupAvatar = document.querySelector('.popup_type_set-avatar');
+export const formAvatar = document.forms.avatar;
+export const buttonSetAvatar = document.querySelector('.profile__picture-btn')
