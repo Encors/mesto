@@ -8,7 +8,7 @@ export const nameInput = popupEditProfile.querySelector('.popup__input_type_name
 export const jobInput = popupEditProfile.querySelector('.popup__input_type_job');
 export const formProfile = document.forms.profile;
 export const formCard = document.forms.card;
-export const newCardSubmitButton = formCard.querySelector('.popup__submit-btn');
+export const buttonSubmit = '.popup__submit-btn';
 export const settings = {
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
@@ -20,4 +20,4 @@ export const popupConfirm = document.querySelector('.popup_type_confirm');
 export const formConfirm = document.forms.confirm;
 export const popupAvatar = document.querySelector('.popup_type_set-avatar');
 export const formAvatar = document.forms.avatar;
-export const buttonSetAvatar = document.querySelector('.profile__picture-btn')
+export const buttonSetAvatar = document.querySelector('.profile__picture-btn');

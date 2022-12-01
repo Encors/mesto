@@ -28,8 +28,9 @@ const initialCards = new Section(
 
 const popupPhoto = new PopupWithImage(constants.popupPhoto);
 
-const popupProfile = new PopupWithForm(constants.popupEditProfile, constants.formProfile, {
+const popupProfile = new PopupWithForm(constants.popupEditProfile, constants.formProfile, constants.buttonSubmit, {
   submitForm: (inputValues) => {
+    popupProfile.renderLoading(true);
     api
       .putProfileInfo(inputValues.nameProfile, inputValues.jobProfile)
       .then(() => {
@@ -37,13 +38,17 @@ const popupProfile = new PopupWithForm(constants.popupEditProfile, constants.for
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        popupProfile.renderLoading(false);
       });
     popupProfile.close();
   },
 });
 
-const popupAppendCard = new PopupWithForm(constants.popupAddCard, constants.formCard, {
+const popupAppendCard = new PopupWithForm(constants.popupAddCard, constants.formCard, constants.buttonSubmit, {
   submitForm: (inputValues) => {
+    popupAppendCard.renderLoading(true);
     api
       .addNewCard(inputValues)
       .then((data) => {
@@ -52,12 +57,16 @@ const popupAppendCard = new PopupWithForm(constants.popupAddCard, constants.form
       })
       .catch((error) => {
         console.log(error);
+      })
+      .finally(() => {
+        popupAppendCard.renderLoading(false);
       });
   },
 });
 
-const popupSetAvatar = new PopupWithForm(constants.popupAvatar, constants.formAvatar, {
+const popupSetAvatar = new PopupWithForm(constants.popupAvatar, constants.formAvatar, constants.buttonSubmit, {
   submitForm: (inputValues) => {
+    popupSetAvatar.renderLoading(true);
     api
       .setNewAvatar(inputValues)
       .then(() => {
@@ -66,6 +75,9 @@ const popupSetAvatar = new PopupWithForm(constants.popupAvatar, constants.formAv
       })
       .catch((error) => {
         console.log(error);
+      })
+      .finally(() => {
+        popupSetAvatar.renderLoading(false);
       });
   },
 });
