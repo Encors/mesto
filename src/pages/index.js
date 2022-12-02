@@ -17,14 +17,36 @@ const api = new Api({
   },
 });
 
-const initialCards = new Section(
+const userInfo = new UserInfo({
+  profileName: '.profile__title',
+  profileJob: '.profile__job',
+  profileAvatar: '.profile__avatar',
+});
+
+let user;
+
+const cardsContainer = new Section(
   {
     renderer: (cardInfo) => {
-      initialCards.setItem(createCard(cardInfo));
+      cardsContainer.setItem(createCard(cardInfo));
     },
   },
   constants.gallery
 );
+
+api
+  .getAllNeededInfo()
+  .then((res) => {
+    const [profileInfo, cards] = res;
+    user = userInfo.getUserInfo(profileInfo);
+    userInfo.setUserInfo(user.name, user.about);
+    userInfo.setAvatar(user.avatar);
+    const reversedCards = cards.reverse();
+    cardsContainer.renderItems(reversedCards);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
 
 const popupPhoto = new PopupWithImage(constants.popupPhoto);
 
@@ -33,8 +55,10 @@ const popupProfile = new PopupWithForm(constants.popupEditProfile, constants.for
     popupProfile.renderLoading(true);
     api
       .putProfileInfo(inputValues.nameProfile, inputValues.jobProfile)
-      .then(() => {
-        getNewUserInfo();
+      .then((newUserInfo) => {
+        user = userInfo.getUserInfo(newUserInfo);
+        userInfo.setUserInfo(newUserInfo.name, newUserInfo.about);
+        popupProfile.close();
       })
       .catch((err) => {
         console.log(err);
@@ -42,7 +66,6 @@ const popupProfile = new PopupWithForm(constants.popupEditProfile, constants.for
       .finally(() => {
         popupProfile.renderLoading(false);
       });
-    popupProfile.close();
   },
 });
 
@@ -52,7 +75,7 @@ const popupAppendCard = new PopupWithForm(constants.popupAddCard, constants.form
     api
       .addNewCard(inputValues)
       .then((data) => {
-        initialCards.setItem(createCard(data));
+        cardsContainer.setItem(createCard(data));
         popupAppendCard.close();
       })
       .catch((error) => {
@@ -70,7 +93,7 @@ const popupSetAvatar = new PopupWithForm(constants.popupAvatar, constants.formAv
     api
       .setNewAvatar(inputValues)
       .then(() => {
-        getNewUserInfo();
+        userInfo.setAvatar(user.avatar);
         popupSetAvatar.close();
       })
       .catch((error) => {
@@ -83,40 +106,6 @@ const popupSetAvatar = new PopupWithForm(constants.popupAvatar, constants.formAv
 });
 
 const confirmPopup = new PopupWithConfirmation(constants.popupConfirm, constants.formConfirm);
-
-// Инициализация карточек при загрузке страницы
-api
-  .getInitialCards()
-  .then((cards) => {
-    initialCards.renderItems(cards);
-  })
-  .catch((error) => {
-    console.log(error);
-  });
-
-// Получить и изменить информацию профиля
-
-let user;
-
-function getNewUserInfo() {
-  api
-    .getProfileInfo()
-    .then((profileInfo) => {
-      const userInfo = new UserInfo({
-        profileName: '.profile__title',
-        profileJob: '.profile__job',
-        profileAvatar: '.profile__avatar',
-      });
-      user = userInfo.getUserInfo(profileInfo);
-      userInfo.setUserInfo(user.name, user.about);
-      userInfo.setAvatar(user.avatar);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-}
-
-getNewUserInfo();
 
 constants.profileEditButton.addEventListener('click', () => {
   constants.nameInput.value = user.name;

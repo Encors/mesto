@@ -33,7 +33,7 @@ export default class Card {
     this._setEventListeners();
 
     this._cardInfo.likes.forEach((like) => {
-      if (like._id == this._userId) {
+      if (like._id === this._userId) {
         this._likeBtn.classList.add('photo-card__like-btn_active');
       }
     });

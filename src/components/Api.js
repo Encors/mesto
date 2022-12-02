@@ -76,7 +76,7 @@ export default class Api {
     }).then(this._response);
   }
 
-  // getFullStartInfo() {
-  // Promise.all([getInitialCards, getProfileInfo])
-  // }
+  getAllNeededInfo() {
+    return Promise.all([this.getProfileInfo(), this.getInitialCards()]);
+  }
 }
