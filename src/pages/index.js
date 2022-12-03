@@ -23,8 +23,6 @@ const userInfo = new UserInfo({
   profileAvatar: '.profile__avatar',
 });
 
-let user;
-
 const cardsContainer = new Section(
   {
     renderer: (cardInfo) => {
@@ -34,13 +32,14 @@ const cardsContainer = new Section(
   constants.gallery
 );
 
+let userId;
 api
   .getAllNeededInfo()
   .then((res) => {
     const [profileInfo, cards] = res;
-    user = userInfo.getUserInfo(profileInfo);
-    userInfo.setUserInfo(user.name, user.about);
-    userInfo.setAvatar(user.avatar);
+    userId = profileInfo._id;
+    userInfo.setUserInfo(profileInfo.name, profileInfo.about);
+    userInfo.setAvatar(profileInfo.avatar);
     const reversedCards = cards.reverse();
     cardsContainer.renderItems(reversedCards);
   })
@@ -56,7 +55,6 @@ const popupProfile = new PopupWithForm(constants.popupEditProfile, constants.for
     api
       .putProfileInfo(inputValues.nameProfile, inputValues.jobProfile)
       .then((newUserInfo) => {
-        user = userInfo.getUserInfo(newUserInfo);
         userInfo.setUserInfo(newUserInfo.name, newUserInfo.about);
         popupProfile.close();
       })
@@ -92,8 +90,8 @@ const popupSetAvatar = new PopupWithForm(constants.popupAvatar, constants.formAv
     popupSetAvatar.renderLoading(true);
     api
       .setNewAvatar(inputValues)
-      .then(() => {
-        userInfo.setAvatar(user.avatar);
+      .then((newUserInfo) => {
+        userInfo.setAvatar(newUserInfo.avatar);
         popupSetAvatar.close();
       })
       .catch((error) => {
@@ -108,8 +106,10 @@ const popupSetAvatar = new PopupWithForm(constants.popupAvatar, constants.formAv
 const confirmPopup = new PopupWithConfirmation(constants.popupConfirm, constants.formConfirm);
 
 constants.profileEditButton.addEventListener('click', () => {
-  constants.nameInput.value = user.name;
-  constants.jobInput.value = user.about;
+  const user = userInfo.getUserInfo();
+  console.log(user);
+  constants.nameInput.value = user.profileName;
+  constants.jobInput.value = user.profileAbout;
   formValidators['profile'].resetValidation();
   popupProfile.open();
 });
@@ -149,7 +149,7 @@ function createCard(cardInfo) {
   const card = new Card(
     {
       cardInfo: cardInfo,
-      user: user,
+      userId: userId,
       handleCardClick: (name, link) => {
         popupPhoto.open(name, link);
       },
