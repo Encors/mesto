@@ -85,20 +85,20 @@ const popupAppendCard = new PopupWithForm(constants.popupAddCard, constants.form
   },
 });
 
-const popupSetAvatar = new PopupWithForm(constants.popupAvatar, constants.formAvatar, constants.buttonSubmit, {
+const popupSetNewAvatar = new PopupWithForm(constants.popupAvatar, constants.formAvatar, constants.buttonSubmit, {
   submitForm: (inputValues) => {
-    popupSetAvatar.renderLoading(true);
+    popupSetNewAvatar.renderLoading(true);
     api
       .setNewAvatar(inputValues)
       .then((newUserInfo) => {
         userInfo.setAvatar(newUserInfo.avatar);
-        popupSetAvatar.close();
+        popupSetNewAvatar.close();
       })
       .catch((error) => {
         console.log(error);
       })
       .finally(() => {
-        popupSetAvatar.renderLoading(false);
+        popupSetNewAvatar.renderLoading(false);
       });
   },
 });
@@ -121,14 +121,14 @@ constants.buttonAddCard.addEventListener('click', () => {
 
 constants.buttonSetAvatar.addEventListener('click', () => {
   formValidators['avatar'].resetValidation();
-  popupSetAvatar.open();
+  popupSetNewAvatar.open();
 });
 
 popupProfile.setEventListeners();
 popupPhoto.setEventListeners();
 popupAppendCard.setEventListeners();
 confirmPopup.setEventListeners();
-popupSetAvatar.setEventListeners();
+popupSetNewAvatar.setEventListeners();
 
 //включаем валидацию
 const formValidators = {};
